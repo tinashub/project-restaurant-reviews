@@ -54,6 +54,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
   margin-top: 12.375rem;
 }
 
+/* ====================== Footer ====================== */
 footer {
   background-color: #444;
   color: #fff;
@@ -73,12 +74,14 @@ footer a:hover, footer a:focus {
               0 4px 2px -2px #777,
               0 2px 6px 0 #999;
 }
+
 /* ====================== Map ====================== */
 #map-container, #map {
   width: 100%;
   height: 30rem;
   background-color: #ccc;
 }
+
 /* ====================== Navbar ====================== */
 nav {
   top: 0;
@@ -89,10 +92,10 @@ nav {
   text-align:center;
 }
 #mainlist nav {
-  height: 4.5rem; /* relative to 110px */
+  height: 4.5rem;
   padding: 1.875rem 0;
 }
-#details nav {  /*I want it 165px*/
+#details nav {
   height: 10.5rem;
   padding: 1.875rem 0 0 0;
 }
@@ -100,7 +103,7 @@ nav h1 a {
   color: #fff;
   font-size: 1.4rem;
   font-weight: 500;
-  letter-spacing: 0.70rem;
+  letter-spacing: 0.5rem;
   text-transform: uppercase;
   margin: 0 0.375rem;
 }
@@ -112,6 +115,7 @@ nav h1 a:focus {
   box-shadow: 0 2px 4px 5px #555,
               2px 0 4px 5px #777;
 }
+
 /* ====================== Skip Button ================================= */
 .skip-button {
   position: absolute;
@@ -225,11 +229,7 @@ nav h1 a:focus {
   line-height: 1.1;
 }
 #restaurant-img {
-	width: 90%;
-}
-#restaurant-address {
-  font-size: 1.2rem;
-  margin: 0.75rem 0;
+	width: 95%;
 }
 #restaurant-cuisine {
   background-color: #333;
@@ -241,7 +241,11 @@ nav h1 a:focus {
   padding: 0.15rem 0;
   text-align: center;
   text-transform: uppercase;
-	width: 90%;
+	width: 95%;
+}
+#restaurant-address {
+  font-size: 1.2rem;
+  margin: 0.75rem 0;
 }
 #restaurant-container, #reviews-container {
   border-bottom: 1px solid #d9d9d9;
@@ -252,15 +256,15 @@ nav h1 a:focus {
   width: calc(100% - 3rem);
 }
 #reviews-container {
-  padding: 0 3rem 3rem;
-  width: calc(100% - 6rem);
+  padding: 0 1.7rem 3rem 1.3rem;
+  width: calc(100% - 3rem);
 }
 #reviews-container h2 {
   color: #f58500;
   font-size: 2.4rem;
   font-weight: 300;
   letter-spacing: -0.075rem;
-  padding-bottom: 0.1rem;
+  padding-left: 0.3rem;
 }
 #reviews-list {
   margin: 0;
@@ -276,7 +280,7 @@ nav h1 a:focus {
   margin: 0 0 3rem;
   overflow: hidden;
   position: relative;
-  width: calc(100% - 0.3rem);
+  width: 100%;
 }
 #restaurant-hours td {
   color: #666;
@@ -305,10 +309,11 @@ nav h1 a:focus {
 .lower-div {
   background-color: white;
   padding: 0.75rem;
+  width: calc(100% - 1.5rem);
 }
 .review-rating {
   padding: 0.375rem 0.525rem;
-  width: 25%;
+  width: 20%;
   color: white;
   background-color: orange;
   font-size: 0.9rem;
@@ -323,34 +328,34 @@ nav h1 a:focus {
 
 /* ====================== Breadcrumb ====================== */
 #breadcrumb {
-    padding: 0.75rem 3rem 1.2rem;
-    list-style: none;
-    background-color: #eee;
-    margin: 3.375rem 0 0 0;
-    width: calc(100% - 6rem);
-    text-align: left;
+  padding: 0.8rem 1.5rem 0.8rem;
+  list-style: none;
+  background-color: #eee;
+  margin: 3.375rem 0 0 0;
+  width: calc(100% - 3rem);
+  text-align: left;
 }
 /* Display list items side by side */
 #breadcrumb li {
-    display: inline;
-    font-size: 1.4rem;
+  display: inline;
+  font-size: 1.4rem;
 }
 /* Add a slash symbol (/) before/behind each list item */
 #breadcrumb li+li:before {
-    padding: 0.6rem;
-    color: black;
-    content: "/\00a0";
+  padding: 0.6rem;
+  color: black;
+  content: "/\00a0";
 }
 /* Add a color to all links inside the list */
 #breadcrumb li a {
-    color: #0275d8;
+  color: #0275d8;
 }
 /* Add a color on mouse-over */
 #breadcrumb li a:hover, #breadcrumb li a:focus {
-    color: #01447e;
-    text-decoration: underline;
-    outline: blue solid 3px;
-    outline-offset: 1px;
+  color: #01447e;
+  text-decoration: underline;
+  outline: lightblue solid 3px;
+  outline-offset: 1px;
 }
 
 /*

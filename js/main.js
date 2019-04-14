@@ -5,7 +5,7 @@ var newMap;
 var markers = [];
 
 /**
- * Fetch neighborhoods and cuisines as soon as the page is loaded.
+ * Fetch neighborhoods and cuisines, add onclick attribute to Skip button, as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
   initMap();
@@ -14,25 +14,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
   addSkipAttr();
 });
 
-/**
- * Add onclick and screen-reader-only text attributes to Skip Button.
- */
 addSkipAttr = () => {
   document.querySelector('.skip-button').setAttribute("onclick", "skipMap()");
-  document.querySelector('.skip-button').setAttribute("aria-label", 'Click to go and select restaurants now');
 }
+
 /**
  * When 'Skip to main content' is chosen, skip the Map and go to the 1st Select.
  */
 skipMap = () => {
     document.getElementById('neighborhoods-select').focus();
 }
+
 /**
  * Fetch all neighborhoods and set their HTML.
  */
 fetchNeighborhoods = () => {
   DBHelper.fetchNeighborhoods((error, neighborhoods) => {
-    if (error) { // Got an error
+    if (error) {
       console.error(error);
     } else {
       self.neighborhoods = neighborhoods;
@@ -61,7 +59,7 @@ fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
  */
 fetchCuisines = () => {
   DBHelper.fetchCuisines((error, cuisines) => {
-    if (error) { // Got an error!
+    if (error) {
       console.error(error);
     } else {
       self.cuisines = cuisines;
@@ -120,7 +118,7 @@ updateRestaurants = () => {
   const neighborhood = nSelect[nIndex].value;
 
   DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
-    if (error) { // Got an error!
+    if (error) {
       console.error(error);
     } else {
       resetRestaurants(restaurants);
@@ -185,6 +183,7 @@ createRestaurantHTML = (restaurant) => {
 
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
+  // Add screen-reader-only explanatory text instead of common 'View details' 
   more.setAttribute("aria-label", restaurant.name + ' Restaurant. View Details');
   more.href = DBHelper.urlForRestaurant(restaurant);
   grideitem.append(more);

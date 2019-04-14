@@ -47,6 +47,18 @@
   <script type="text/javascript" src="js/dbhelper.js"></script>
   <script type="text/javascript" src="js/restaurant_info.js"></script>
 
+  <script>
+    if(navigator.serviceWorker) {
+      navigator.serviceWorker.register('/sw.js')
+      .then(function(reg) {
+        console.log("sw registered");
+      })
+      .catch(function(err) {
+        console.log("sw error");
+      });
+    }
+  </script>
+
 </body>
 
 </html>

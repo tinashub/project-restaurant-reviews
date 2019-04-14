@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
  */
 initMap = () => {
   fetchRestaurantFromURL((error, restaurant) => {
-    if (error) { // Got an error!
+    if (error) {
       console.error(error);
     } else {      
       self.newMap = L.map('map', {
@@ -87,10 +87,10 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 
 /**
  * Create restaurant operating hours HTML table and add it to the webpage.
+ * Added title as table's header
  */
 fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => {
   const hours = document.getElementById('restaurant-hours');
-  //hours is a table - create table heading
   const opening = document.createElement('th');
   opening.colSpan = 2;
   opening.innerHTML = '<h3>Opening hours</h3>';
@@ -137,7 +137,9 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
  */
 createReviewHTML = (review) => {
   const li = document.createElement('li');
-
+  // Create 2 divs inside each 'li'
+  
+  // upperdiv contains reviewer name and date
   const upperdiv = document.createElement('div');
   upperdiv.className = 'upper-div';
   const name = document.createElement('div');
@@ -152,6 +154,7 @@ createReviewHTML = (review) => {
 
   li.append(upperdiv);
 
+  // lowerdiv contains rating and comment
   const lowerdiv = document.createElement('div');
   lowerdiv.className = 'lower-div';
 
@@ -172,11 +175,9 @@ createReviewHTML = (review) => {
 
 /**
  * Add restaurant name to the breadcrumb navigation menu
- * Set screen-reader-only text to breadcrumb
  */
 fillBreadcrumb = (restaurant=self.restaurant) => {
   const breadcrumb = document.getElementById('breadcrumb');
-  //breadcrumb.setAttribute("aria-label", 'Go back to select restaurant');
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;
   breadcrumb.append(li);
