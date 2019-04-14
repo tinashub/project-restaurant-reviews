@@ -40,12 +40,12 @@ initMap = () => {
  */
 fetchRestaurantFromURL = (callback) => {
   if (self.restaurant) { // restaurant already fetched!
-    callback(null, self.restaurant)
+    callback(null, self.restaurant);
     return;
   }
   const id = getParameterByName('id');
   if (!id) { // no id found in URL
-    error = 'No restaurant id in URL'
+    error = 'No restaurant id in URL';
     callback(error, null);
   } else {
     DBHelper.fetchRestaurantById(id, (error, restaurant) => {
@@ -55,7 +55,7 @@ fetchRestaurantFromURL = (callback) => {
         return;
       }
       fillRestaurantHTML();
-      callback(null, restaurant)
+      callback(null, restaurant);
     });
   }
 }
@@ -139,7 +139,7 @@ createReviewHTML = (review) => {
   const li = document.createElement('li');
 
   const upperdiv = document.createElement('div');
-  upperdiv.className = 'upper-div'
+  upperdiv.className = 'upper-div';
   const name = document.createElement('div');
   name.innerHTML = review.name;
   name.className = 'review-name';
@@ -153,7 +153,7 @@ createReviewHTML = (review) => {
   li.append(upperdiv);
 
   const lowerdiv = document.createElement('div');
-  lowerdiv.className = 'lower-div'
+  lowerdiv.className = 'lower-div';
 
   const rating = document.createElement('div');
   rating.innerHTML = 'RATING: ' + review.rating;
@@ -172,9 +172,11 @@ createReviewHTML = (review) => {
 
 /**
  * Add restaurant name to the breadcrumb navigation menu
+ * Set screen-reader-only text to breadcrumb
  */
 fillBreadcrumb = (restaurant=self.restaurant) => {
   const breadcrumb = document.getElementById('breadcrumb');
+  //breadcrumb.setAttribute("aria-label", 'Go back to select restaurant');
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;
   breadcrumb.append(li);

@@ -1,18 +1,32 @@
 let restaurants,
   neighborhoods,
-  cuisines
-var newMap
-var markers = []
+  cuisines;
+var newMap;
+var markers = [];
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
-  initMap(); // added 
+  initMap();
   fetchNeighborhoods();
   fetchCuisines();
+  addSkipAttr();
 });
 
+/**
+ * Add onclick and screen-reader-only text attributes to Skip Button.
+ */
+addSkipAttr = () => {
+  document.querySelector('.skip-button').setAttribute("onclick", "skipMap()");
+  document.querySelector('.skip-button').setAttribute("aria-label", 'Click to go and select restaurants now');
+}
+/**
+ * When 'Skip to main content' is chosen, skip the Map and go to the 1st Select.
+ */
+skipMap = () => {
+    document.getElementById('neighborhoods-select').focus();
+}
 /**
  * Fetch all neighborhoods and set their HTML.
  */
@@ -32,6 +46,7 @@ fetchNeighborhoods = () => {
  */
 fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
   const select = document.getElementById('neighborhoods-select');
+  select.setAttribute("onchange", "updateRestaurants()");
   select.setAttribute("aria-label", 'Select neighborhood');
   neighborhoods.forEach(neighborhood => {
     const option = document.createElement('option');
@@ -60,6 +75,7 @@ fetchCuisines = () => {
  */
 fillCuisinesHTML = (cuisines = self.cuisines) => {
   const select = document.getElementById('cuisines-select');
+  select.setAttribute("onchange", "updateRestaurants()");
   select.setAttribute("aria-label", 'Select cuisine');
   cuisines.forEach(cuisine => {
     const option = document.createElement('option');
@@ -145,35 +161,35 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
  * Create restaurant HTML.
  */
 createRestaurantHTML = (restaurant) => {
-  const gridelement = document.createElement('div');
-  gridelement.className = 'grid-item';
+  const grideitem = document.createElement('div');
+  grideitem.className = 'grid-item';
   const image = document.createElement('img');
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
   image.alt = restaurant.name;
   const imgcontainer = document.createElement('div');
   imgcontainer.className = 'img-container';
   imgcontainer.append(image);
-  gridelement.append(imgcontainer);
+  grideitem.append(imgcontainer);
 
   const name = document.createElement('h1');
   name.innerHTML = restaurant.name;
-  gridelement.append(name);
+  grideitem.append(name);
 
   const neighborhood = document.createElement('p');
   neighborhood.innerHTML = restaurant.neighborhood;
-  gridelement.append(neighborhood);
+  grideitem.append(neighborhood);
 
   const address = document.createElement('p');
   address.innerHTML = restaurant.address;
-  gridelement.append(address);
+  grideitem.append(address);
 
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
   more.setAttribute("aria-label", restaurant.name + ' Restaurant. View Details');
   more.href = DBHelper.urlForRestaurant(restaurant);
-  gridelement.append(more);
+  grideitem.append(more);
 
-  return gridelement;
+  return grideitem;
 }
 
 /**
@@ -189,5 +205,4 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     }
     self.markers.push(marker);
   });
-
-} 
+}
