@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
  */
 initMap = () => {
   fetchRestaurantFromURL((error, restaurant) => {
-    if (error) { // Got an error!
+    if (error) {
       console.error(error);
     } else {      
       self.newMap = L.map('map', {
@@ -22,7 +22,7 @@ initMap = () => {
         scrollWheelZoom: false
       });
       L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
-        mapboxToken: '<your MAPBOX API KEY HERE>',
+        mapboxToken: 'pk.eyJ1IjoidmFsZW4zMyIsImEiOiJjanR4ZG5janoxYmdlNDVydDIzc3J5cHZsIn0.P5DKCScYaS1PwzdhXNpFFw',
         maxZoom: 18,
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
           '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -35,33 +35,17 @@ initMap = () => {
   });
 }  
  
-/* window.initMap = () => {
-  fetchRestaurantFromURL((error, restaurant) => {
-    if (error) { // Got an error!
-      console.error(error);
-    } else {
-      self.map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 16,
-        center: restaurant.latlng,
-        scrollwheel: false
-      });
-      fillBreadcrumb();
-      DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
-    }
-  });
-} */
-
 /**
  * Get current restaurant from page URL.
  */
 fetchRestaurantFromURL = (callback) => {
   if (self.restaurant) { // restaurant already fetched!
-    callback(null, self.restaurant)
+    callback(null, self.restaurant);
     return;
   }
   const id = getParameterByName('id');
   if (!id) { // no id found in URL
-    error = 'No restaurant id in URL'
+    error = 'No restaurant id in URL';
     callback(error, null);
   } else {
     DBHelper.fetchRestaurantById(id, (error, restaurant) => {
@@ -71,7 +55,7 @@ fetchRestaurantFromURL = (callback) => {
         return;
       }
       fillRestaurantHTML();
-      callback(null, restaurant)
+      callback(null, restaurant);
     });
   }
 }
@@ -87,8 +71,8 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   address.innerHTML = restaurant.address;
 
   const image = document.getElementById('restaurant-img');
-  image.className = 'restaurant-img'
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.alt = restaurant.name;
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
@@ -103,21 +87,26 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 
 /**
  * Create restaurant operating hours HTML table and add it to the webpage.
+ * Added title as table's header
  */
 fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => {
   const hours = document.getElementById('restaurant-hours');
+  const opening = document.createElement('th');
+  opening.colSpan = 2;
+  opening.innerHTML = '<h3>Opening hours</h3>';
+  hours.append(opening);
   for (let key in operatingHours) {
     const row = document.createElement('tr');
 
     const day = document.createElement('td');
     day.innerHTML = key;
-    row.appendChild(day);
+    row.append(day);
 
     const time = document.createElement('td');
     time.innerHTML = operatingHours[key];
-    row.appendChild(time);
+    row.append(time);
 
-    hours.appendChild(row);
+    hours.append(row);
   }
 }
 
@@ -128,19 +117,19 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   const container = document.getElementById('reviews-container');
   const title = document.createElement('h2');
   title.innerHTML = 'Reviews';
-  container.appendChild(title);
+  container.append(title);
 
   if (!reviews) {
     const noReviews = document.createElement('p');
     noReviews.innerHTML = 'No reviews yet!';
-    container.appendChild(noReviews);
+    container.append(noReviews);
     return;
   }
   const ul = document.getElementById('reviews-list');
   reviews.forEach(review => {
-    ul.appendChild(createReviewHTML(review));
+    ul.append(createReviewHTML(review));
   });
-  container.appendChild(ul);
+  container.append(ul);
 }
 
 /**
@@ -148,21 +137,38 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
  */
 createReviewHTML = (review) => {
   const li = document.createElement('li');
-  const name = document.createElement('p');
+  // Create 2 divs inside each 'li'
+  
+  // upperdiv contains reviewer name and date
+  const upperdiv = document.createElement('div');
+  upperdiv.className = 'upper-div';
+  const name = document.createElement('div');
   name.innerHTML = review.name;
-  li.appendChild(name);
+  name.className = 'review-name';
+  upperdiv.append(name);
 
-  const date = document.createElement('p');
+  const date = document.createElement('div');
   date.innerHTML = review.date;
-  li.appendChild(date);
+  date.className = 'review-date';
+  upperdiv.append(date);
 
-  const rating = document.createElement('p');
-  rating.innerHTML = `Rating: ${review.rating}`;
-  li.appendChild(rating);
+  li.append(upperdiv);
 
-  const comments = document.createElement('p');
+  // lowerdiv contains rating and comment
+  const lowerdiv = document.createElement('div');
+  lowerdiv.className = 'lower-div';
+
+  const rating = document.createElement('div');
+  rating.innerHTML = 'RATING: ' + review.rating;
+  rating.className = 'review-rating';
+  lowerdiv.append(rating);
+
+  const comments = document.createElement('div');
   comments.innerHTML = review.comments;
-  li.appendChild(comments);
+  comments.className = 'review-comments';
+  lowerdiv.append(comments);
+
+  li.append(lowerdiv);
 
   return li;
 }
@@ -174,7 +180,7 @@ fillBreadcrumb = (restaurant=self.restaurant) => {
   const breadcrumb = document.getElementById('breadcrumb');
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;
-  breadcrumb.appendChild(li);
+  breadcrumb.append(li);
 }
 
 /**
