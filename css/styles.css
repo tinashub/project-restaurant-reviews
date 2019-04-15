@@ -185,7 +185,7 @@ nav h1 a:focus {
   display: block;
   margin: 0;
 }
-.grid-item h1 {
+.grid-item h2 {
   color: darkorange;
   font-size: 1.4rem;
   font-weight: 500;
@@ -259,7 +259,7 @@ nav h1 a:focus {
   padding: 0 1.7rem 3rem 1.3rem;
   width: calc(100% - 3rem);
 }
-#reviews-container h2 {
+#reviews-container h3 {
   color: #f58500;
   font-size: 2.4rem;
   font-weight: 300;
